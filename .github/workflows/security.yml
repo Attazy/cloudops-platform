@@ -24,9 +24,9 @@ jobs:
           python-version: "3.12"
 
       - name: Install Trivy
-        uses: aquasecurity/setup-trivy@v0.2.4
+        uses: aquasecurity/setup-trivy@v0.2.6
         with:
-          version: latest
+          version: v0.69.3
 
       - name: Scan filesystem
         run: trivy fs --scanners vuln,secret --severity HIGH,CRITICAL --exit-code 1 .
