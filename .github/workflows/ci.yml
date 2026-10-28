@@ -10,6 +10,28 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: cloudops_test
+          POSTGRES_USER: cloudops
+          POSTGRES_PASSWORD: ci_test_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U cloudops -d cloudops_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      POSTGRES_DB: cloudops_test
+      POSTGRES_USER: cloudops
+      POSTGRES_PASSWORD: ci_test_password
+      DB_HOST: localhost
+      DB_PORT: "5432"
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
